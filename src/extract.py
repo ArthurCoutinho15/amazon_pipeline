@@ -35,8 +35,12 @@ class Extract():
     
     
     def save_json(self, response, name):
-        with open(f'/home/arthur/Projetos/amazon_pipeline/data/{name}_{self.country}.json', 'w') as f:
+        path = f'/home/arthur/Projetos/amazon_pipeline/data/{name}_{self.country}.json'
+        with open(path, 'w') as f:
             json.dump(response, f, indent=4)
-            
+        return path
+    
+    
+    
             
     
