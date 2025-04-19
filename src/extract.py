@@ -13,8 +13,8 @@ class Extract():
         self.url = url
         self.country = country
     
-    def querystring(self, page):
-        querystring = {"category_id":"468642",
+    def querystring(self,endpoint,query, page):
+        querystring_category = {"category_id":f"{query}", #468642 id videogame
                        "page":f"{page}",
                        "country":f"{self.country}",
                        "sort_by":"RELEVANCE",
@@ -22,9 +22,21 @@ class Extract():
                        "is_prime":"false",
                        "deals_and_discounts":"NONE"}
         
-        return querystring
+        querystring_products = {"query":f"{query}",
+                       "page":f"{page}",
+                       "country": f"{self.country}",
+                       "sort_by":"RELEVANCE",
+                       "product_condition":"ALL",
+                       "is_prime":"false",
+                       "deals_and_discounts":"NONE"}
 
-    def extract_products_by_category(self, querystring):
+        if endpoint == "products":
+            return querystring_products
+        elif endpoint == "category":
+            return querystring_category
+    
+    
+    def extract_data(self, querystring):
         try:
             response = requests.get(self.url, headers=self.headers, params=querystring)
             response.raise_for_status()
@@ -38,6 +50,8 @@ class Extract():
         path = f'/home/arthur/Projetos/amazon_pipeline/data/{name}_{self.country}.json'
         with open(path, 'w') as f:
             json.dump(response, f, indent=4)
+        
+        print("Dados salvos com sucesso!")
         return path
     
     
