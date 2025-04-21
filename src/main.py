@@ -31,6 +31,11 @@ def load_data_into_mongo(uri, db_name, coll_name,path):
     
     result = mongo.load(data)
     print(result)
+    
+def sparkSession():
+    spark = Spark()
+    spark_session = spark.sparkSession()
+    return spark
 
 def transform_data(path, country, currency_symbol):
     spark = Spark()
@@ -38,25 +43,33 @@ def transform_data(path, country, currency_symbol):
     data = spark.transform_data_into_json_lines(path)
     new_path = spark.save_json_lines(data, path)
     
-    df = spark.transform_data(spark_session, country=country, currency_symbol=currency_symbol, path=new_path)
+    df = spark.transform_data(spark_session, country, currency_symbol, path=new_path)
     print("Dados transformados com sucesso!")
     print(df.show(5))
     return df
 
-
-
+def load_data_into_mysql(df):
+    spark = Spark()
+    spark.write_to_mysql(df)
+    
 
 if __name__ == "__main__":
-    url_products_by_category = "https://real-time-amazon-data.p.rapidapi.com/products-by-category"
-    url_products = "https://real-time-amazon-data.p.rapidapi.com/search"
     
-    for country in ["US", "BR"]:
-        data = extract_data_for_country(endpoint="category",query="468642", country=country, url=url_products_by_category, file_name="dados_pagina")
-        load_data_into_mongo(uri=str(os.getenv('uri')), db_name="amazon_pipeline", coll_name="Amazon_Products_by_category", data=["data"]["products"])
+    url_products = "https://real-time-amazon-data.p.rapidapi.com/search"
     
     for country in ["US", "BR"]:
         path = extract_data_for_country(endpoint="products", query="Iphone", country=country, url=url_products, pages=1, file_name="produtos")
         load_data_into_mongo(uri=str(os.getenv('uri')), db_name="amazon_pipeline", coll_name="amazon_products", path=path)
     
-    path = "/home/arthur/Projetos/amazon_pipeline/data/produtos_1_BR_copy.json"
-    df = transform_data(path, "BR", "R$")
+    path_br = "/home/arthur/Projetos/amazon_pipeline/data/produtos_1_BR.json"
+    path_us = "/home/arthur/Projetos/amazon_pipeline/data/produtos_1_US.json"
+    
+    spark = sparkSession()
+    
+    df_br = transform_data(path_br, "BR", "R$")
+    df_us = transform_data(path_us, "US", "$")
+        
+    df_total = spark.join_df(df_br, df_us)
+    
+    load_data_into_mysql(df=df_total)
+    
