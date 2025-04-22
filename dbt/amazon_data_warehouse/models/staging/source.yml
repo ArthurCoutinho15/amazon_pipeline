@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: amazon  
+    database: amazon
+    schema: amazon
+    tables: 
+      - name: produtos_amazon

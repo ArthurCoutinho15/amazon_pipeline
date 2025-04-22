@@ -2,6 +2,14 @@ venv
 data
 .env
 mysql-connector-java-8.0.28.jar
+
+/home/arthur/Projetos/amazon_pipeline/pipeline/logs
+airflow-webserver.pid
+airflow.cfg
+airflow.db
+standalone_admin_password.txt
+webserver_config.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
