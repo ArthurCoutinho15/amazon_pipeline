@@ -21,6 +21,7 @@ with source as (
             when preco_original_produto = 0 or preco_produto = 0 then preco_original_produto
             else round(preco_original_produto - preco_produto, 2)
         end as diferenca_valor,
+        titulo_produto,
         foto_produto_url,
         estrelas_avaliacao_produto,
         url_produto,

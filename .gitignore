@@ -4,6 +4,7 @@ data
 mysql-connector-java-8.0.28.jar
 
 /home/arthur/Projetos/amazon_pipeline/pipeline/logs
+logs
 airflow-webserver.pid
 airflow.cfg
 airflow.db

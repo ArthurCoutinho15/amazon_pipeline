@@ -13,6 +13,7 @@ renamed as (
         {{ adapter.quote("product_photo")}} as foto_produto_url,
         {{ adapter.quote("product_price")}} as preco_produto,
         {{ adapter.quote("product_star_rating") }} as estrelas_avaliacao_produto,
+        {{ adapter.quote("product_title") }} as titulo_produto,
         {{ adapter.quote("product_url") }} as url_produto,
         {{ adapter.quote("sales_volume") }} as volume_vendas, 
         {{ adapter.quote("product_minimum_offers") }} as ofertas_minimas_produto,
