@@ -15,7 +15,7 @@ def run_script():
 
 default_args = {
     'owner': 'Arthur',
-    'start_date': datetime(2023, 1, 1),
+    'start_date': datetime(2025, 1, 1),
     'retries': 1,
 }
 
