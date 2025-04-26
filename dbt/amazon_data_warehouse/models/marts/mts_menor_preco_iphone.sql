@@ -1,7 +1,8 @@
 with source as (
-    select pais, sum(num_avaliacoes_produto) as avaliacoes
-    from i{{ref("int_produtos")}}
-    group by pais;
+    select min(preco_produto) as preco_minimo, left(titulo_produto, 15) as iphone
+    from {{ref("int_produtos")}}
+    group by left(titulo_produto, 15)
+
 )
 
 select *

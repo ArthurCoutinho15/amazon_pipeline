@@ -16,7 +16,6 @@ renamed as (
         {{ adapter.quote("product_title") }} as titulo_produto,
         {{ adapter.quote("product_url") }} as url_produto,
         {{ adapter.quote("sales_volume") }} as volume_vendas, 
-        {{ adapter.quote("product_minimum_offers") }} as ofertas_minimas_produto,
         {{ adapter.quote("country") }} as pais
     from source
 )

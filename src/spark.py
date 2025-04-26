@@ -58,9 +58,16 @@ class Spark():
         df = df.drop(*[c for c in drop_cols if c in df.columns])
         return df
 
-    def join_df(self, df1, df2):
-        """Une dois DataFrames com as mesmas colunas."""
-        return df1.unionByName(df2)
+    def join_df(self, dataframe_list):
+        """Une DataFrames com as mesmas colunas."""
+        if not dataframe_list:
+            raise ValueError("Lista de dataframes vazia")
+        
+        final_df = dataframe_list[0]
+        for df in dataframe_list[1:]:
+            final_df = final_df.unionByName(df)
+            
+        return final_df
 
     def write_to_mysql(self, df):
         """Salva o DataFrame no banco de dados MySQL."""
@@ -84,9 +91,8 @@ class Spark():
                 .option("user", DATABASE_CONFIG["user"]) \
                 .option("password", DATABASE_CONFIG["password"]) \
                 .option("driver", DATABASE_CONFIG["driver"]) \
-                .mode("append") \
+                .mode("overwrite") \
                 .save()
             print("✅ Dados carregados com sucesso!")
         except Exception as e:
             print(f"❌ Erro ao carregar dados: {str(e)}")
-        print("Dados carregados")
