@@ -76,16 +76,3 @@ if __name__ == "__main__":
         
     
     load_data_into_mysql(df_final)  
-      
-        # path_br = "/home/arthur/Projetos/amazon_pipeline/data/produtos_1_BR.json"
-        # path_us = "/home/arthur/Projetos/amazon_pipeline/data/produtos_1_US.json"
-        
-        # spark = sparkSession()
-        
-        # df_br = transform_data(path_br, "BR", "R$")
-        # df_us = transform_data(path_us, "US", "$")
-            
-        # df_total = spark.join_df(df_br, df_us)
-        
-        # load_data_into_mysql(df=df_total)
-    
